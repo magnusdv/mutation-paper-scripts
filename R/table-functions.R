@@ -52,14 +52,15 @@ makeGT = function(x) {
 # Function to clean up LaTeX output from gt tables
 as_latex_clean = function(x) {
   x |>
-    tab_caption("TODO") |>
     as_latex() |>
     str_remove_all("\\[2.5pt\\]") |>
     str_remove_all("\\\\addlinespace") |>
-    str_remove_all("\\*") |>
+    str_replace_all("tabular\\*", "tabular") |>
+    str_replace_all("hspace\\*", "hspace") |>
     str_remove("\\|") |>
     str_remove("\\{\\\\linewidth\\}") |>
-    str_remove("@\\{\\\\extracolsep\\{\\\\fill\\}\\}")
+    str_remove("@\\{\\\\extracolsep\\{\\\\fill\\}\\}") |>
+    str_replace("\\\\fontsize.*selectfont", "\\\\centering\\\\small")
 }
 
 

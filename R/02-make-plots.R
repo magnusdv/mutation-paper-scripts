@@ -10,7 +10,7 @@ duodata = readRDS(here("output/data/duo-data.rds"))
 pA = plotDensities(duodata, cut = 3)
 pA
 
-ggsave(here("output/figures/duoSims.pdf"), pA, width = 9, height = 5)
+ggsave(here("output/figures/simsA.pdf"), pA, width = 9, height = 5)
 
 
 
@@ -36,4 +36,12 @@ lims = tribble(
 pB = plotDensities2(sibdata, panel_limits = lims)
 pB
 
-ggsave(here("output/figures/sibSims.pdf"), pB, width = 9, height = 5)
+ggsave(here("output/figures/simsB.pdf"), pB, width = 9, height = 5)
+
+library(patchwork)
+pAB = pA / pB +
+  plot_layout(guides = "collect") +
+  plot_annotation(tag_levels = "A") &
+  theme(legend.position = "bottom")
+
+ggsave(here("output/figures/simsAB.pdf"), pAB, width = 8, height = 8)
